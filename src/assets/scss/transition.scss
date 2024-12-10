@@ -1,0 +1,22 @@
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+
+.route-enter-from {
+  opacity: 0;
+  transform: translateY(50px)
+}
+.route-enter-active,
+.route-leave-active {
+  transition: all .15s ease-out
+}
+.route-leave-to {
+  opacity: 0;
+  transform: translateY(50px)
+}

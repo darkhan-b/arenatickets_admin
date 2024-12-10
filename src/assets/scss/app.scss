@@ -1,0 +1,19 @@
+@import "variables";
+@import "mixins";
+@import "helpers";
+@import "buttons";
+@import "form";
+@import "scheme";
+@import "table";
+@import "transition";
+
+#app {
+  min-height: 100vh;
+  min-width: 100vw;
+  > .n-layout {
+    min-height: 100vh;
+  }
+}
+.ql-editor{
+  min-height: 200px;
+}

@@ -1,0 +1,15 @@
+.btn-themed {
+  background-color: $color-primary;
+  color: #fff;
+  border-radius: 3px;
+  border: none;
+  height: 34px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:not(.n-button--disabled):hover,
+  &:not(.n-button--disabled):focus {
+    background-color: $color-primary-hover;
+    color: #fff;
+  }
+}

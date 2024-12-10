@@ -1,0 +1,65 @@
+.eloquent-table {
+  width: 100%;
+  //table-layout: fixed;
+  word-break: break-word;
+  transition: background-color 0.3s ease-in-out;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: var(--n-merged-td-color);
+  border-left: 1px solid rgba(239, 239, 245, 1);
+  border-right: 1px solid rgba(239, 239, 245, 1);
+  border-top: 1px solid rgba(239, 239, 245, 1);
+  text-align: left;
+  tbody {
+    background: #fff;
+  }
+  .search-sub {
+    background-color: #f4f4f7;
+  }
+  th {
+    background-color: #f4f4f7;
+    position: relative;
+    &.sortable {
+      cursor: pointer;
+    }
+    &.sorted {
+      padding-right: 25px;
+    }
+  }
+  th,
+  td {
+    border-bottom: 1px solid rgba(239, 239, 245, 1);
+    padding: 10px;
+    min-width: 120px;
+    width: 120px;
+  }
+  .sort-icon {
+    transition: 0.2s all ease-in;
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    &.reverted {
+      transform: rotate(180deg);
+    }
+  }
+  .actions-td {
+    .n-button {
+      vertical-align: middle;
+    }
+  }
+  tr.tr-clickable {
+    cursor: pointer;
+    &:hover {
+      background: rgba(255, 230, 231, 0.4);
+    }
+  }
+}
+.table-wrap {
+  overflow: auto;
+}
+.no-pad {
+  .n-card__content, .n-card-header {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
