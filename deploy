@@ -12,5 +12,5 @@ git commit --allow-empty -m "$1"
 git push
 
 # Удаленные команды
-ssh arenatickets "nvm use 18 && cd /var/www/arenatickets_admin && git pull && yarn && yarn build"
+ssh arenatickets "cd /var/www/arenatickets_admin && git pull && yarn && yarn build"
 
