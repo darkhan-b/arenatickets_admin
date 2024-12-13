@@ -9,6 +9,7 @@ export const ruMessages = {
   general: 'Общее',
   kz: 'Қазақ',
   invitation: 'Пригласительный',
+  forum: 'Беслатный вход',
   map: 'Карта',
   no_tickets: 'Билетов нет',
   partner: 'Партнер',

@@ -85,6 +85,10 @@
     background: #ead057;
     color: #000000;
   }
+  &.warning, &.forum {
+    background: green;
+    color: white;
+  }
   &.secondary, &.cash {
     background: #e0e0e0;
     color: #222;

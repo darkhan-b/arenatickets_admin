@@ -27,7 +27,7 @@
                 <n-button
                   type="primary"
                   :loading="loading"
-                  :disabled="!p.amount || !p.price || !p.title.ru"
+                  :disabled="!p.title.ru"
                   @click="savePricegroup(p, false)"
                   >Сохранить</n-button
                 >
