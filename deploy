@@ -1,3 +1,7 @@
 git add . && git commit --allow-empty -m "$1" && git push &&
-ssh root@91.147.95.50 -t "cd /var/www/arenatickets_admin && /root/.nvm/versions/node/v18.20.5/bin/yarn install && /root/.nvm/versions/node/v18.20.5/bin/yarn build"
-
+ssh arenatickets << EOF
+  cd /var/www/arenatickets_admin;
+  git pull;
+  yarn;
+  yarn build;
+EOF
