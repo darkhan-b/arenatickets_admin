@@ -1,36 +1,3 @@
-#!/bin/bash
-
-# Проверка наличия сообщения коммита
-if [ -z "$1" ]; then
-  echo "Ошибка: Укажите сообщение для коммита!"
-  exit 1
-fi
-
-# Локальные команды
-echo "Добавление изменений в Git..."
-git add .
-
-echo "Создание коммита..."
-git commit --allow-empty -m "$1"
-if [ $? -ne 0 ]; then
-  echo "Ошибка: Не удалось создать коммит. Проверьте изменения."
-  exit 1
-fi
-
-echo "Отправка изменений на удалённый репозиторий..."
-git push
-if [ $? -ne 0 ]; then
-  echo "Ошибка: Не удалось отправить изменения. Проверьте подключение к Git."
-  exit 1
-fi
-
-# Удаленные команды
-echo "Подключение к серверу и выполнение деплоя..."
-ssh arenatickets "cd /var/www/arenatickets_admin && git pull && yarn && yarn build"
-if [ $? -ne 0 ]; then
-  echo "Ошибка: Не удалось выполнить деплой на сервере. Проверьте лог."
-  exit 1
-fi
-
-echo "Деплой завершён успешно!"
+git add . && git commit --allow-empty -m "$1" && git push &&
+ssh arenatickets -t "cd /var/www/arenatickets_admin && git pull && yarn && yarn build"
 
