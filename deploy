@@ -1,7 +1,53 @@
-git add . && git commit --allow-empty -m "$1" && git push &&
-ssh arenatickets << EOF
-  cd /var/www/arenatickets_admin;
-  git pull;
-  yarn;
-  yarn build;
-EOF
+
+#!/bin/bash
+
+# Переменные окружения
+REPO_PATH="/var/www/arenatickets_admin" # Путь к проекту на сервере
+SERVER="arenatickets"                  # Имя сервера для подключения по SSH
+LOG_FILE="/var/log/deploy.log"         # Путь к логам деплоя
+
+# Проверка входного аргумента
+if [ -z "$1" ]; then
+  echo "Ошибка: необходимо указать сообщение для коммита."
+  echo "Пример: ./deploy \"commit message\""
+  exit 1
+fi
+
+# Логирование начала деплоя
+echo "=== Деплой начался: $(date) ===" >> "$LOG_FILE"
+
+# Локальные действия
+echo "Добавление изменений и коммит..."
+git add . >> "$LOG_FILE" 2>&1
+if ! git commit --allow-empty -m "$1" >> "$LOG_FILE" 2>&1; then
+  echo "Ошибка: не удалось создать коммит. Проверьте изменения." | tee -a "$LOG_FILE"
+  exit 1
+fi
+
+echo "Отправка изменений в удаленный репозиторий..."
+if ! git push >> "$LOG_FILE" 2>&1; then
+  echo "Ошибка: не удалось отправить изменения в репозиторий." | tee -a "$LOG_FILE"
+  exit 1
+fi
+
+# Подключение к серверу и выполнение команд
+echo "Подключение к серверу $SERVER и обновление проекта..."
+ssh $SERVER "cd $REPO_PATH && \
+  echo 'Получение изменений из репозитория...' && \
+  git pull || { echo 'Ошибка: git pull не удался.'; exit 1; } && \
+  echo 'Установка зависимостей...' && \
+  yarn || { echo 'Ошибка: установка зависимостей не удалась.'; exit 1; } && \
+  echo 'Сборка проекта...' && \
+  yarn build || { echo 'Ошибка: сборка проекта не удалась.'; exit 1; } && \
+  echo 'Проект успешно обновлен.'"
+
+# Проверка статуса SSH-команд
+if [ $? -ne 0 ]; then
+  echo "Ошибка: не удалось выполнить команды на сервере $SERVER." | tee -a "$LOG_FILE"
+  exit 1
+fi
+
+# Завершение деплоя
+echo "=== Деплой завершен: $(date) ===" >> "$LOG_FILE"
+echo "Деплой успешно выполнен."
+exit 0
