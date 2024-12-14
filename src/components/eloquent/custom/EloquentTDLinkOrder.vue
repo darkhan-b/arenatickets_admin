@@ -162,18 +162,38 @@
                 <n-tag type="default" v-else>Пользователь</n-tag>
               </td>
             </tr>
-            <tr>
+             <tr v-if="details.name">
               <td>Имя</td>
               <td>{{ details.name }}</td>
             </tr>
-            <tr>
+            <tr v-if="details.phone">
               <td>Телефон</td>
               <td>{{ details.phone }}</td>
             </tr>
-            <tr>
+            <tr v-if="details.email">
               <td>Email</td>
               <td>{{ details.email }}</td>
             </tr>
+            <tr v-if="details.company">
+              <td>Компания</td>
+              <td>{{ details.company }}</td>
+            </tr>
+            <tr v-if="details.position">
+              <td>Должность</td>
+              <td>{{ details.position }}</td>
+            </tr>
+            <tr v-if="details.country">
+              <td>Страна</td>
+              <td>{{ details.country }}</td>
+            </tr>
+            <tr v-if="details.participation">
+              <td>Тип участия</td>
+              <td>{{ getParticipation(details.participation) }}</td>
+            </tr>
+            <!-- <tr>
+              <td>Источник</td>
+              <td>{{ details.source }}</td>
+            </tr> -->
           </tbody>
         </n-table>
         <n-h4>О Билете</n-h4>
@@ -257,6 +277,19 @@ const mailTickets = () => {
       dialog.success({ title: 'Письмо отправлено' })
     }
   })
+}
+
+const getParticipation = (participation: string) => {
+  switch (participation) {
+    case 'visitor':
+      return 'Посетитель'
+    case 'speaker':
+      return 'Спикер'
+    case 'exhibitor':
+      return 'Участник выставки'
+    default:
+      return participation
+  }
 }
 
 defineExpose({ rowClicked })
